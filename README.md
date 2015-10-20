@@ -30,13 +30,24 @@ fclose($file2);
 ```
 只有这样的操作才能产生一个正常文件名的文件。   
 ![PHP_create2](PHP_create2.jpg)   
-可以看出来，在Windows上中文的默认存储格式就是
-PHP打开文件之前先用   
+可以看出来，在Windows上中文的默认存储格式就是GBK，那我们再来试一下打开这个文件。
 ```php
-
+<?php
+$filename=iconv('utf-8','gbk',"测试文档.txt");
+$file3 = fopen($filename,'r');
+$content = fread($file3,filesize($filename));
+echo $content;
+fclose($file3);
+ ?>
 ```
+只有这样才能正常的打开文件，这是先将我们的正常的utf-8的编码格式的字符转化为GBK的才能打开文件。而且也能够正常显示出来。
+![PHP_file](PHP_file.jpg)  
+
+
 ######网络传输
-http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。
+http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。   
+在客户端用js的的中文转码   
+在服务器端用php的urldecode()来解码。   
 
 ##MySQL
 ####关于编码
