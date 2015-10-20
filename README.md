@@ -7,7 +7,34 @@
 ##PHP
 ####关于编码
 ######打开文件
-几乎所有的编程语言打开中文文件都有很大的问题，还包括中文的输入和展示。
+几乎所有的编程语言打开中文文件都有很大的问题，还包括中文的输入和展示。  
+`$filename = iconv(in_charset,out_charset,$filename);`这个PHP函数能够将字符串进行转码。   
+首先在创建文件时，如果直接创建中文文件的话保存下的文件名也会是乱码。   
+```php
+<?php
+$file2 = fopen("测试文档.txt", 'w');
+fwrite($file2,"这是测试文件");
+fclose($file2);
+?>
+```
+这样的结果就是出来了这样的一个文件。因为我用的`sublime_text`，在这个编辑器里的文本默认编码是`utf-8`。
+![PHP_create](PHP_create.jpg)   
+打开文件之后中文是能够正常显示的，查看编码格式是`utf-8`看来是创建文件的时候有问题。   
+```php
+<?php 	
+$filename = iconv('utf-8', 'gbk','测试文档.txt');
+$file2 = fopen($filename, 'w');
+fwrite($file2,"这是测试文件");
+fclose($file2);
+?>
+```
+只有这样的操作才能产生一个正常文件名的文件。   
+![PHP_create2](PHP_create2.jpg)   
+可以看出来，在Windows上中文的默认存储格式就是
+PHP打开文件之前先用   
+```php
+
+```
 ######网络传输
 http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。
 
