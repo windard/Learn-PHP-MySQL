@@ -30,7 +30,9 @@ fclose($file2);
 ```
 只有这样的操作才能产生一个正常文件名的文件。   
 ![PHP_create2](PHP_create2.jpg)   
-可以看出来，在Windows上中文的默认存储格式就是GBK，那我们再来试一下打开这个文件。
+这是iconv函数的基本用法。
+`str = iconv ( string in_charset, string out_charset, string str );`  
+可以看出来，在Windows上中文的默认存储格式就是GBK，那我们再来试一下打开这个文件。  
 ```php
 <?php
 $filename=iconv('utf-8','gbk',"测试文档.txt");
@@ -43,9 +45,38 @@ fclose($file3);
 只有这样才能正常的打开文件，这是先将我们的正常的utf-8的编码格式的字符转化为GBK的才能打开文件。而且也能够正常显示出来。   
 ![PHP_file](PHP_file.jpg)  
 
+PHP中还有几个与编码格式有关的函数。
+- mb_detect_encoding：检测字符串的编码格式.但是这个函数的结果好像不太准。
+ >```php
+ ><?php 
+ >header("content-Type: text/html; charset=Utf-8"); 
+ >$encode = "中文";
+ >$result = mb_detect_encoding($encode,array('ASCII','GB2312','GBK','UTF-8','CP936'));
+ >echo $result;
+ >echo $encode;
+ >?>
+ >```
+- string = mb_convert_encoding ( string str, string to_encoding [, mixed from_encoding] )
+ >```php
+ ><?php 
+ >header("content-Type: text/html; charset=Utf-8"); 
+ >$encode = "中文";
+ >$result = mb_detect_encoding($encode,array('ASCII','GB2312','GBK','UTF-8','CP936'));
+ >echo $result;
+ >echo $encode;
+ >$encode = iconv("cp936","UTF-8", $encode);
+ >#$encode = mb_convert_encoding($encode,"UTF-8","CP936");
+ >#$encode = mb_convert_encoding($encode,"UTF-8",array('UTF-8','ASCII','EUC-CN','CP936','BIG-5','GB2312','GBK'));
+ >$result = mb_detect_encoding($encode,array('ASCII','GB2312','GBK','UTF-8','CP936'));
+ >echo $result;
+ >echo $encode;
+ ?>
+ >```
+应该无论是iconv还是mb_detect_encoding都是可以正常转化的，但是不知道为什么，转化的效果并不好。
+
 ######网络传输
-http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。   
-在客户端用js的的中文转码   
+http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。  
+在客户端，js用encodeURIComponent函数来进行中文转码，Python用urllib模块的urlencode来进行中文转码。但是后来我才知道，如果是浏览器上的HTML发送表单到PHP接受，中文转码是会由浏览器自动完成，可以不用转码，而如果使用Python发送中文，则需要转码。而且，GBK与utf-8的转码结果不一样，建议前端和后端代码都统一用utf-8编码格式。  
 在服务器端用php的`urldecode()`来解码。   
 
 
@@ -53,6 +84,7 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 ####关于编码
 中文编码确实是非常蛋疼的一件事。  
 在数据库里尤甚。MySQL的默认字符串集是拉丁语，真是~~  
+而且，在MySQL数据库中，没有UTF-8，也没有utf-8，而是utf8.    
 现在在我的电脑里的MySQL无法存入中文，类似于这样。  
 ![MySQL_ERROR](MySQL_ERROR1.jpg)  
 我在数据库的表选项的编码格式里面也选择了`utf8_general_ci`然而还是没有什么用。  
@@ -89,3 +121,10 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 `utf8`，`utf-8`与`UTF-8`不是同一个意思，/(ㄒoㄒ)/~~在MySQL里是`utf8`
 
 至于我们为什么要把编码格式都改成utf-8，因为utf-8是能够存储更多的字符，，包括全球所有的语言，是大势所趋。而GBK是中国的标准，不仅支持的汉字数量远不足utf-8，而且在几种GBK的编码方式中相互都不兼容，虽然目前的Windows操作系统中中文的默认编码格式是GBK，但是GBK编码的很多缺点已经越来越明显。
+
+##参考链接
+[mb_detect_encoding](http://php.net/manual/zh/function.mb-detect-encoding.php)   
+[PHP编码转换函数mb_convert_encoding与iconv的使用说明](http://kooyee.iteye.com/blog/653534)   
+[PHP转码函数mb_convert_encoding与iconv的使用](http://www.91ctc.com/article/article-389.html)   
+[转码函数iconv与mb_convert_encoding的区别](http://www.okajax.com/a/201106/php_iconv_mb_convert_encoding.html)   
+[PHP程序中的汉字编码探讨](http://www.cnblogs.com/bandbandme/p/3154186.html)
