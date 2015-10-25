@@ -80,7 +80,7 @@ PHP中还有几个与编码格式有关的函数。
 http协议中不支持中文编码，所以在http传输中文的时候需要先将中文进行URLencode，在服务器端接收到数据之后在URLdecode回来。  
 在客户端，js用encodeURIComponent函数来进行中文转码，Python用urllib模块的urlencode来进行中文转码。但是后来我才知道，如果是浏览器上的HTML发送表单到PHP接受，中文转码是会由浏览器自动完成，可以不用转码，而如果使用Python发送中文，则需要转码。而且，GBK与utf-8的转码结果不一样，建议前端和后端代码都统一用utf-8编码格式。  
 在服务器端用php的`urldecode()`来解码。   
-
+但是在我看了一篇博客之后，发现事情更复杂了，[关于URL编码](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html),这是阮一峰写的一篇关于编码格式的博客。
 
 ##MySQL
 ####关于编码
@@ -123,6 +123,27 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 `utf8`，`utf-8`与`UTF-8`不是同一个意思，/(ㄒoㄒ)/~~在MySQL里是`utf8`
 
 至于我们为什么要把编码格式都改成utf-8，因为utf-8是能够存储更多的字符，，包括全球所有的语言，是大势所趋。而GBK是中国的标准，不仅支持的汉字数量远不足utf-8，而且在几种GBK的编码方式中相互都不兼容，虽然目前的Windows操作系统中中文的默认编码格式是GBK，但是GBK编码的很多缺点已经越来越明显。
+```php
+mysql_query("SET NAMES 'UTF8'"); 
+```
+设定连接数据库编码方式
+
+还有一些比较好的博客
+[4项技巧使你不再为PHP中文编码苦恼](http://www.topthink.com/topic/7146.html)
+[mysql_client_encoding](http://php.net/manual/zh/function.mysql-client-encoding.php)
+[mysql_set_charset](http://php.net/manual/zh/function.mysql-set-charset.php)
+[mysqli_character_set_name](http://php.net/manual/zh/mysqli.character-set-name.php)
+[python2.7 查询mysql中文乱码问题](http://segmentfault.com/a/1190000000353533)
+[ MySQL5中文乱码解决(Z)](http://greyshine.blog.51cto.com/1003856/301373)
+[完美解决PHP中文乱码](http://blog.csdn.net/wufongming/article/details/3256186)
+[PHP乱码问题，UTF-8乱码常见问题小结](http://www.jb51.net/article/30064.htm)
+[怎样解决PHP中文乱码问题](http://www.lupaworld.com/forum.php?mod=viewthread&tid=148807)
+[PHP输出中文乱码的问题](http://www.cnblogs.com/leandro/archive/2008/04/21/1368517.html)
+[查看修改mysql编码方式](http://blog.csdn.net/daven_java/article/details/8788071)
+[查看修改mysql编码方式[转载]](http://helloworlda.iteye.com/blog/1275160)
+[ MySql修改数据库编码为UTF8](http://blog.csdn.net/qiyuexuelang/article/details/9049985)
+
+
 
 ##参考链接
 [mb_detect_encoding](http://php.net/manual/zh/function.mb-detect-encoding.php)   
