@@ -122,11 +122,72 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 
 `utf8`，`utf-8`与`UTF-8`不是同一个意思，/(ㄒoㄒ)/~~在MySQL里是`utf8`
 
-至于我们为什么要把编码格式都改成utf-8，因为utf-8是能够存储更多的字符，，包括全球所有的语言，是大势所趋。而GBK是中国的标准，不仅支持的汉字数量远不足utf-8，而且在几种GBK的编码方式中相互都不兼容，虽然目前的Windows操作系统中中文的默认编码格式是GBK，但是GBK编码的很多缺点已经越来越明显。
+至于我们为什么要把编码格式都改成utf-8，因为utf-8是能够存储更多的字符，，包括全球所有的语言，是大势所趋。而GBK是中国的标准，不仅支持的汉字数量远不足utf-8，而且在几种GBK的编码方式中相互都不兼容，虽然目前的Windows操作系统中中文的默认编码格式是GBK，但是GBK编码的很多缺点已经越来越明显。  
+
+####修复数据库编码问题
+
+1. Linux
+我是在Ubuntu下装的MySQL，使用`SHOW VARIABLES LIKE ‘character%’;`后查看的结果是这样。  
+```
++--------------------------+----------------------------+
+| Variable_name | Value |
++--------------------------+----------------------------+
+| character_set_client | utf8 |
+| character_set_connection | utf8 |
+| character_set_database | latin1 |
+| character_set_filesystem | binary |
+| character_set_results | utf8 |
+| character_set_server | latin1 |
+| character_set_system | utf8 |
+| character_sets_dir | /usr/share/mysql/charsets/ |
++--------------------------+----------------------------+
+```
+可以看到除了前面的两个是utf8与我之前在Windows下不同之外，其他的有问题的地方与在Windows下是一样的，因为Linux下没有GBK编码，默认编码格式即utf-8，所以比Windows的情况好一点。   
+**解决办法**  
+ 1. 修改mysql的my.cnf文件中的字符集键值`sudo vim /etc/mysql/my.cnf`  
+  - 在`[client]`字段中加入`default-character-set=utf8`  
+  - 在`[mysqld]`字段张加入`character-set-server=utf8`  
+  - 在`[mysql]`字段中加入`default-character-set=utf8`（注意，一个是mysql，一个是mysqld）  
+ 2. 然后再重启MySQL就可以了，但是我的MySQL在这里重启的时候出了一点问题，没有办法关掉。我就把系统重启了一下，再次进入MySQL就可以看到数据库编码已经完全恢复了正常。  
+ ![MySQL_successful_linux.jpg](MySQL_successful_linux.jpg)  
+ 3. 如果还有问题，那就是在连接的时候出了问题，在sql语句执行的最前面加上这句代码`SET NAMES ‘utf8′;`,它相当于一下三条代码。  
+ ·`
+  SET character_set_client = utf8;  
+  SET character_set_results = utf8;  
+  SET character_set_connection = utf8;  
+  `
+2. Windows
+我也在Windows下安装了MySQL，中文编码问题非常严重，在网上找的教程有一点的问题，最终解决了。  
+一开始我的数据库编码是这样的。   
+![MySQL_error_windows.jpg](MySQL_error_windows.jpg)  
+简直惨不忍睹，各种编码格式，在网上找了教程步骤也是跟上面的一样，分别在三个地方加上设定默认编码格式就好了。  但是我的my.ini的内容是这样的，根本就没有那些字段。
+![MySQL_ini.jpg](MySQL_ini.jpg)  
+ 1. 那我们先自己加上一个字段`[client]`,并在这个的下一行加上`default-character-set = utf8`，保存看一下结果。当然，先重启MySQL。  
+此时我的`my.ini`是这个样子的。   
+![MySQL_client.jpg](MySQL_client.jpg)  
+此时我的MySQL是这个样子的。  
+![MySQL_client_successful.jpg](MySQL_client_successful.jpg)  
+太棒了，多了俩utf8。  
+ 2.那我们在`my.ini`里面再加上一个字段`[mysql]`，并在这个的下一行加上`default-character-set = utf8`，保存看一下结果。当然先重启MySQL。  
+此时我的`my.ini`是这个样子的。  
+![MySQL_mysql.jpg](MySQL_mysql.jpg)  
+此时我的MySQL是这个样子的。  
+![MySQL_mysql_success.jpg](MySQL_mysql_success.jpg)  
+跟之前没有什么变化嘛~  (⊙o⊙)… 没事，还有一步。
+ 3. 我们在`my.ini`的仅有的一个字段`[mysqld]`里面再加上这一句`character-set-server=utf8`,保存看一下结果。当然，先重启MySQL。   
+此时我的`my.ini`是这个样子的。  
+![MySQL_mysqld.jpg](MySQL_mysqld.jpg)
+此时我的MySQL是这个样子的。  
+![MySQL_mysqld_successful.jpg](MySQL_mysqld_successful.jpg)
+完成了，哦也\\(\^o\^)/.   
+
+
+>设定与数据库的连接的编码格式,这是在Linux下和Windows下通用的。
 ```php
 mysql_query("SET NAMES 'UTF8'"); 
 ```
-设定连接数据库编码方式
+
+
 
 还有一些比较好的博客
 [4项技巧使你不再为PHP中文编码苦恼](http://www.topthink.com/topic/7146.html)
@@ -151,3 +212,4 @@ mysql_query("SET NAMES 'UTF8'");
 [PHP转码函数mb_convert_encoding与iconv的使用](http://www.91ctc.com/article/article-389.html)   
 [转码函数iconv与mb_convert_encoding的区别](http://www.okajax.com/a/201106/php_iconv_mb_convert_encoding.html)   
 [PHP程序中的汉字编码探讨](http://www.cnblogs.com/bandbandme/p/3154186.html)
+[（原创）Linux下MySQL 5.5的修改字符集编码为UTF8（彻底解决中文乱码问题）](http://www.ha97.com/5359.html)
