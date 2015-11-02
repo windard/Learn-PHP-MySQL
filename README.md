@@ -185,6 +185,8 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 >设定与数据库的连接的编码格式,这是在Linux下和Windows下通用的。
 ```php
 mysql_query("SET NAMES 'UTF8'"); 
+#如果是用mysqli就是这个
+#mysqli_set_charset($recouce ,"utf8");
 ```
 
 
