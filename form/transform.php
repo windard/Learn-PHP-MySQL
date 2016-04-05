@@ -1,14 +1,14 @@
 <?php
 /*******EDIT LINES 3-8*******/
 $DB_Server = "localhost"; //MySQL Server    
-$DB_Username = "XXX"; //MySQL Username     
-$DB_Password = "XXX";             //MySQL Password     
-$DB_DBName = "XXX";         //MySQL Database Name  
-$DB_TBLName = "XXX"; //MySQL Table Name   
-$filename = "XXX";         //File Name
+$DB_Username = "fenchico_admin"; //MySQL Username     
+$DB_Password = "admin_2016";             //MySQL Password     
+$DB_DBName = "fenchico_user";         //MySQL Database Name  
+$DB_TBLName = "stu"; //MySQL Table Name   
+$filename = "报名名单";         //File Name
 /*******YOU DO NOT NEED TO EDIT ANYTHING BELOW THIS LINE*******/    
 //create MySQL connection   
-$sql = "Select * from $DB_TBLName";
+$sql = "Select id 序号,name 姓名,age 年龄,sex 性别,school 学校,stunum 学号,phone 手机,code 参与码 from $DB_TBLName order by id";
 $Connect = @mysql_connect($DB_Server, $DB_Username, $DB_Password) or die("Couldn't connect to MySQL:<br>" . mysql_error() . "<br>" . mysql_errno());
 //select database   
 $Db = @mysql_select_db($DB_DBName, $Connect) or die("Couldn't select database:<br>" . mysql_error(). "<br>" . mysql_errno());   
@@ -18,8 +18,8 @@ mysql_query("set names 'utf8'",$Connect);
 $result = @mysql_query($sql,$Connect) or die("Couldn't execute query:<br>" . mysql_error(). "<br>" . mysql_errno());    
 $file_ending = "xls";
 //header info for browser
+header("Content-Type: application/xls; charset=UTF-8");    
 header('Content-Encoding: UTF-8');
-header("Content-Type: application/vnd.ms-excel; charset=UTF-8");  
 header("Content-Disposition: attachment; filename=$filename.xls");  
 header("Pragma: no-cache"); 
 header("Expires: 0");

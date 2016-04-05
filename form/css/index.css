@@ -1,0 +1,131 @@
+*{
+	padding: 0;
+	margin:0;
+	font-family: "Source Sans Pro","MicroSoft YaHei", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 16px;
+}
+
+@media (max-width: 991px){
+	.content{
+		box-sizing: border-box;
+		width:100%;
+		margin:0px auto;
+	}
+}
+
+@media (min-width: 991px){
+	.content{
+		width:550px;
+		border:1px solid #ddd;
+		border-radius: 6px;
+		margin:100px auto;
+	}
+}
+
+
+.content{
+	text-align: center;
+}
+
+.content img{
+	margin-bottom: 10px;
+	max-width: 100%;
+	width:100%;
+}
+
+.content form{
+	padding: 20px 30px;
+	text-align: center;
+}
+
+input[type=text]{
+	font-family:"MicroSoft YaHei", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	box-sizing: border-box;
+	outline: none;
+	border:1px solid rgba(125,125,125,0.4);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: 3px;
+	padding: 10px 15px;
+	margin: 0 auto 10px auto;
+	-webkit-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+	font-weight: 300;
+	width:200px;
+}
+
+input[type=button]{
+	font-family:"MicroSoft YaHei", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	box-sizing: border-box;
+	outline: none;
+	border:1px solid rgba(125,125,125,0.4);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color: #fff;
+	border-radius: 3px;
+	padding: 10px 15px;
+	margin-top: 10px;
+	display: block;
+	cursor: pointer;
+	text-align: center;
+	-webkit-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+	font-weight: 400;	
+	color: #fff;
+	background-color:#0181CA;
+   	 margin: 0 auto 0;
+}
+
+input[type=button]:hover{
+	background-color: #53e3a6;
+	color:#fff;
+}
+
+select{
+	cursor: pointer;
+	font-family:"MicroSoft YaHei", Arial, "Helvetica Neue", Helvetica, sans-serif;
+	box-sizing: border-box;
+	outline: none;
+	border:1px solid rgba(125,125,125,0.4);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background-color:rgba(255,255,255,0.4);
+	border-radius: 3px;
+	padding: 10px 15px;
+	margin: 0 auto 10px auto;
+	display: inline-block;	
+	-webkit-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+	font-weight: 300;
+	width:200px;
+}
+
+.center{
+	margin:0 auto 0;
+	width: 270px;
+}
+
+.hidden{
+	display: none;
+}
+
+ol li{
+	list-style: none;
+	display: inline;
+	text-align: left;
+	display: block;
+}
+
+.notes{
+	text-align: left;
+	padding: 20px 10px;
+}
+
+.after{
+	font-weight:normal;
+	text-align: left;
+	padding: 20px 10px;
+}
