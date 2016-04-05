@@ -1,0 +1,208 @@
+<!-- <html>
+	<head>
+		<title>学工处</title>
+		<meta charset="utf-8">
+		<link href="css/xuegong.css" rel="stylesheet" type="text/css">
+		<script src="jquery-2.1.4.min.js" ></script>
+		<script>
+		jQuery(document).ready(function($) {
+			var kemuVal   = $("[name=kemu]").val();
+			var searchVal = $("[name=search]").val();
+			var submitVal = "OK";
+			function	submit(){
+				$.getJSON('results.php', {search:searchVal,kemu:kemuVal,submit:submitVal}, function(json, textStatus) {
+						alert("HEHE");
+				});
+				return false;
+			}
+		});
+		</script>	
+	</head>
+	<body>
+		<div class="header">
+			<div class="wrapper">
+				<div id="logo"><a href="main.html">XDDOC</a></div>
+			    <div id="search" style="background:url(img/1.png);background-size:cover;color:white;">
+			    	<form name="form1" id="form" onSubmit="return submit()" >
+					     <input name="search" type="text" id="search" value=""/>
+                         <input type="text" name="kemu" value="xuegongchu" style="display:none">-->
+			<!--		</form>
+			    </div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="ct">
+					<a href="xuegong.html" id="xuegong">学工处</a>
+					<a href="jiaowu.html">教务处</a>
+					<a href="xinsheng.html">新生部</a>
+					<a href="caiwu.html">财务处</a>
+					<a href="dangzheng.html">党政办</a>
+					<a href="zhaosheng.html">招生办</a>
+					<a href="houqin.html">后勤处</a>
+					<a href="gongan.html">公安处</a>
+					<a href="yiyuan.html">校医院</a>
+					<a href="wuye.html">物业</a>
+					<a href="dianxin.html">电信</a>
+					<a href="yinhang.html">银行</a>
+			</div>
+			<hr style="color:#E2E2E2">
+			<div class="cc"></div>
+		</div>
+		<div class="footer">
+				西  电  表  格  查  询  系  统&nbsp&nbsp&nbsp版权所有&nbsp&nbsp&nbspCopyright © 2015  All Rights Reserved. 
+			</div>
+	</body>
+</html> -->
+<html>
+	<head>
+		<title>学工处</title>
+		<meta charset="utf-8">
+		<link href="css/xuegong.css" rel="stylesheet" type="text/css">
+		<style>
+		.cc{
+			line-height: 2.4em;
+			font-size: 1.2em;
+			/*font-weight: bold;*/
+			font-family: MicroSoft YaHei;
+		}
+		.cc ul{
+			list-style: none;
+		}
+		.cc ul li{
+			width: 90%;
+			margin: 5 auto 5;
+			/*padding-left: 5%; */
+			border-bottom: 2px solid #ccc;
+		}
+		.cc a{
+			margin-left: 10px;
+			color:black;
+			text-decoration: none;
+		}
+		.cc a:hover{
+			color:orange;
+		}
+
+		</style>
+		<script src="jquery-2.1.4.min.js" ></script>
+		<script>
+	//	jQuery(document).ready(function($) {
+	//		function submit(){
+                //	var kemuVal   = "xuegongchu";
+                //var searchVal = $("[name=search]").val();
+                //var submitVal = "OK";                
+                // alert("HEHEHE");
+                //$.get('create.php', {search:searchVal,kemu:kemuVal,submit:submitVal}, function() {
+                //		alert("HEHE");
+                //});
+                //return false;
+		//	}
+	//	});
+            //function Trim(str,is_global)
+            //{
+            // return str.replace(/(^\s*)|(\s*$)/g, ""); 
+            //}        
+	$(document).ready(function(){
+        
+        	var kemu   = "xuegongchu";
+			var searchVal = ".";
+            var submitVal = "OK";     
+            $.getJSON("results.php",{search:searchVal,tablename:kemu,submit:submitVal},function(json){
+            //$.getJSON("results.php",{search:searchVal,tablename:kemu,submit:submitVal},function(json){
+				// alert(data[1] + " !");
+				// console.log(data[1]);
+                //alert("HSVNJ");
+                //alert(typeof(json));
+                //alert(json.data[0]);
+                // $(".cc").append("<a href="">ascbasca</a>");
+                // $(".cc").append(typeof(json));
+                //$(".cc").append(json.data[0]);
+               var content = "";
+                if(json.length=="0"){
+                	alert("No Found");
+                }else{
+               for (var i = json.data.length - 1; i >= 0; i--) {
+               	content += "<li>"+json.data[i]+"</li>";
+               };
+               $(".cc ul").html(content);
+                }
+			})
+		$("button").click(function(){
+			var kemu   = "xuegongchu";
+			var searchVal = $("[name=search]").val();
+            var submitVal = "OK";     
+            $.getJSON("results.php",{search:searchVal,tablename:kemu,submit:submitVal},function(json){
+            //$.getJSON("results.php",{search:searchVal,tablename:kemu,submit:submitVal},function(json){
+				// alert(data[1] + " !");
+				// console.log(data[1]);
+                //alert("HSVNJ");
+                //alert(typeof(json));
+                //alert(json.data[0]);
+                // $(".cc").append("<a href="">ascbasca</a>");
+                // $(".cc").append(typeof(json));
+                //$(".cc").append(json.data[0]);
+               var content = "";
+                if(json.length=="0"){
+                	alert("No Found");
+                }else{
+               for (var i = json.data.length - 1; i >= 0; i--) {
+               	content += "<li>"+json.data[i]+"</li>";
+               };
+               $(".cc ul").html(content);
+                }
+			})
+			return false;
+		})
+	})
+
+		</script>			
+	</head>
+	<body>
+		<div class="header">
+			<div class="wrapper">
+				<div id="logo"><a href="main.html">XDDOC</a></div>
+			    <div id="search" style="background:url(img/1.png);background-size:cover;color:white;">
+						<form  id="myform" name="form1" id="form">						
+							<input type="text" name="search" id="text" >
+							<button style="display:none">Submit</button>
+						</form>
+			    </div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="ct">
+					<a href="xuegong.html" id="xuegong">学工处</a>
+					<a href="jiaowu.html">教务处</a>
+					<a href="xinsheng.html">新生部</a>
+					<a href="caiwu.html">财务处</a>
+					<a href="dangzheng.html">党政办</a>
+					<a href="zhaosheng.html">招生办</a>
+					<a href="houqin.html">后勤处</a>
+					<a href="gongan.html">公安处</a>
+					<a href="yiyuan.html">校医院</a>
+					<a href="wuye.html">物业</a>
+					<a href="dianxin.html">电信</a>
+					<a href="yinhang.html">银行</a>
+			</div>
+			<hr style="color:#E2E2E2">
+			<div class="cc">
+				<!-- <div class="search_item"><a href="#">这是一个链接</a></div> -->
+				<ul>
+<!-- 					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li>
+					<li><a href="#">这是一个链接</a></li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="footer">
+				西  电  表  格  查  询  系  统&nbsp;&nbsp;&nbsp;版权所有&nbsp;&nbsp;&nbsp;Copyright &copy; 2015  All Rights Reserved. 
+			</div>
+	</body>
+</html>

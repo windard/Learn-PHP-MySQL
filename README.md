@@ -127,7 +127,7 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 ####修复数据库编码问题
 
 1. Linux
-我是在Ubuntu下装的MySQL，使用`SHOW VARIABLES LIKE ‘character%’;`后查看的结果是这样。  
+我是在Ubuntu下装的MySQL，使用`SHOW VARIABLES LIKE ‘%character%’;`后查看的结果是这样。  
 ```
 +--------------------------+----------------------------+
 | Variable_name | Value |
