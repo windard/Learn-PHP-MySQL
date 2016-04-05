@@ -18,7 +18,7 @@ fclose($file2);
 ?>
 ```
 这样的结果就是出来了这样的一个文件。因为我用的`sublime_text`，在这个编辑器里的文本默认编码是`utf-8`。   
-![PHP_create](PHP_create.jpg)   
+![PHP_create](images/PHP_create.jpg)   
 打开文件之后中文是能够正常显示的，查看编码格式是`utf-8`看来是创建文件的时候有问题。   
 ```php
 <?php 	
@@ -29,7 +29,7 @@ fclose($file2);
 ?>
 ```
 只有这样的操作才能产生一个正常文件名的文件。   
-![PHP_create2](PHP_create2.jpg)   
+![PHP_create2](images/PHP_create2.jpg)   
 这是iconv函数的基本用法。
 `str = iconv ( string in_charset, string out_charset, string str );`  
 可以看出来，在Windows上中文的默认存储格式就是GBK，那我们再来试一下打开这个文件。  
@@ -43,7 +43,7 @@ fclose($file3);
  ?>
 ```
 只有这样才能正常的打开文件，这是先将我们的正常的utf-8的编码格式的字符转化为GBK的才能打开文件。而且也能够正常显示出来。   
-![PHP_file](PHP_file.jpg)  
+![PHP_file](images/PHP_file.jpg)  
 
 PHP中还有几个与编码格式有关的函数。
 - mb_detect_encoding：检测字符串的编码格式.但是这个函数的结果好像不太准。
@@ -88,12 +88,12 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 在数据库里尤甚。MySQL的默认字符串集是拉丁语，真是~~  
 而且，在MySQL数据库中，没有UTF-8，也没有utf-8，而是utf8.    
 现在在我的电脑里的MySQL无法存入中文，类似于这样。  
-![MySQL_ERROR](MySQL_ERROR1.jpg)  
+![MySQL_ERROR](images/MySQL_ERROR1.jpg)  
 我在数据库的表选项的编码格式里面也选择了`utf8_general_ci`然而还是没有什么用。  
 在数据从PHP传到数据库的时候还专门做了转码utf-8，然而还是传不进来。  
 后经高人指点，在MySQL控制台内输入`show variables like "%character%";`  
 即可看到整个数据库的编码格式。  
-![MySQL_character](MySQL_character.jpg)  
+![MySQL_character](images/MySQL_character.jpg)  
 
 - 第一行表示MySQL客户端的编码格式GBK
 - 第二行表示MySQL连接时的编码格式GBK
@@ -106,19 +106,19 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 >除了文件存储格式二进制是对的和数据库所在的系统的编码格式，其他都是错误的吖！
 
 正确的应该是这个样子的。
-![MySQL_character2](MySQL_character2.jpg)
+![MySQL_character2](images/MySQL_character2.jpg)
 
 然后还有一个地方也要看一下，就像查看一下我的MySQL的`test`的数据库的`baoweichu`表单的编码格式。  
 先用`use test;`找到那个数据库，然后`show create table baoweichu;`。  
 就可以看到，是这个样子的。  
-![MySQL_database](MySQL_database.jpg)  
+![MySQL_database](images/MySQL_database.jpg)  
 虽然下面的那个地方是写的utf-8的编码格式，不过上面的不对，在表单里面的存储编码格式还是拉丁语编码。  
 
 正确的编码格式应该是这个样子的。  
-![MySQL_database2](MySQL_database2.jpg)
+![MySQL_database2](images/MySQL_database2.jpg)
 
 所以只有把所有的编码格式都正确了之后，才能够在数据库里写上正确的中文。  
-![MySQL_right](MySQL_right.jpg)
+![MySQL_right](images/MySQL_right.jpg)
 
 `utf8`，`utf-8`与`UTF-8`不是同一个意思，/(ㄒoㄒ)/~~在MySQL里是`utf8`
 
@@ -149,7 +149,7 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
   - 在`[mysqld]`字段张加入`character-set-server=utf8`  
   - 在`[mysql]`字段中加入`default-character-set=utf8`（注意，一个是mysql，一个是mysqld）  
  2. 然后再重启MySQL就可以了，但是我的MySQL在这里重启的时候出了一点问题，没有办法关掉。我就把系统重启了一下，再次进入MySQL就可以看到数据库编码已经完全恢复了正常。  
- ![MySQL_successful_linux.jpg](MySQL_successful_linux.jpg)  
+ ![MySQL_successful_linux.jpg](images/MySQL_successful_linux.jpg)  
  3. 如果还有问题，那就是在连接的时候出了问题，在sql语句执行的最前面加上这句代码`SET NAMES ‘utf8′;`,它相当于一下三条代码。  
  ·`
   SET character_set_client = utf8;  
@@ -159,26 +159,26 @@ http协议中不支持中文编码，所以在http传输中文的时候需要先
 2. Windows
 我也在Windows下安装了MySQL，中文编码问题非常严重，在网上找的教程有一点的问题，最终解决了。  
 一开始我的数据库编码是这样的。   
-![MySQL_error_windows.jpg](MySQL_error_windows.jpg)  
+![MySQL_error_windows.jpg](images/MySQL_error_windows.jpg)  
 简直惨不忍睹，各种编码格式，在网上找了教程步骤也是跟上面的一样，分别在三个地方加上设定默认编码格式就好了。  但是我的my.ini的内容是这样的，根本就没有那些字段。
-![MySQL_ini.jpg](MySQL_ini.jpg)  
+![MySQL_ini.jpg](images/MySQL_ini.jpg)  
  1. 那我们先自己加上一个字段`[client]`,并在这个的下一行加上`default-character-set = utf8`，保存看一下结果。当然，先重启MySQL。  
 此时我的`my.ini`是这个样子的。   
-![MySQL_client.jpg](MySQL_client.jpg)  
+![MySQL_client.jpg](images/MySQL_client.jpg)  
 此时我的MySQL是这个样子的。  
-![MySQL_client_successful.jpg](MySQL_client_successful.jpg)  
+![MySQL_client_successful.jpg](images/MySQL_client_successful.jpg)  
 太棒了，多了俩utf8。  
  2.那我们在`my.ini`里面再加上一个字段`[mysql]`，并在这个的下一行加上`default-character-set = utf8`，保存看一下结果。当然先重启MySQL。  
 此时我的`my.ini`是这个样子的。  
-![MySQL_mysql.jpg](MySQL_mysql.jpg)  
+![MySQL_mysql.jpg](images/MySQL_mysql.jpg)  
 此时我的MySQL是这个样子的。  
-![MySQL_mysql_success.jpg](MySQL_mysql_success.jpg)  
+![MySQL_mysql_success.jpg](images/MySQL_mysql_success.jpg)  
 跟之前没有什么变化嘛~  (⊙o⊙)… 没事，还有一步。
  3. 我们在`my.ini`的仅有的一个字段`[mysqld]`里面再加上这一句`character-set-server=utf8`,保存看一下结果。当然，先重启MySQL。   
 此时我的`my.ini`是这个样子的。  
-![MySQL_mysqld.jpg](MySQL_mysqld.jpg)
+![MySQL_mysqld.jpg](images/MySQL_mysqld.jpg)
 此时我的MySQL是这个样子的。  
-![MySQL_mysqld_successful.jpg](MySQL_mysqld_successful.jpg)
+![MySQL_mysqld_successful.jpg](images/MySQL_mysqld_successful.jpg)
 完成了，哦也\\(\^o\^)/.   
 
 
@@ -192,21 +192,20 @@ mysql_query("SET NAMES 'UTF8'");
 
 
 还有一些比较好的博客
-[4项技巧使你不再为PHP中文编码苦恼](http://www.topthink.com/topic/7146.html)
-[mysql_client_encoding](http://php.net/manual/zh/function.mysql-client-encoding.php)
-[mysql_set_charset](http://php.net/manual/zh/function.mysql-set-charset.php)
-[mysqli_character_set_name](http://php.net/manual/zh/mysqli.character-set-name.php)
-[python2.7 查询mysql中文乱码问题](http://segmentfault.com/a/1190000000353533)
-[ MySQL5中文乱码解决(Z)](http://greyshine.blog.51cto.com/1003856/301373)
-[完美解决PHP中文乱码](http://blog.csdn.net/wufongming/article/details/3256186)
-[PHP乱码问题，UTF-8乱码常见问题小结](http://www.jb51.net/article/30064.htm)
-[怎样解决PHP中文乱码问题](http://www.lupaworld.com/forum.php?mod=viewthread&tid=148807)
-[PHP输出中文乱码的问题](http://www.cnblogs.com/leandro/archive/2008/04/21/1368517.html)
-[查看修改mysql编码方式](http://blog.csdn.net/daven_java/article/details/8788071)
-[查看修改mysql编码方式[转载]](http://helloworlda.iteye.com/blog/1275160)
-[ MySql修改数据库编码为UTF8](http://blog.csdn.net/qiyuexuelang/article/details/9049985)
-
-
+[4项技巧使你不再为PHP中文编码苦恼](http://www.topthink.com/topic/7146.html)                  
+[mysql_client_encoding](http://php.net/manual/zh/function.mysql-client-encoding.php)              
+[mysql_set_charset](http://php.net/manual/zh/function.mysql-set-charset.php)                    
+[mysqli_character_set_name](http://php.net/manual/zh/mysqli.character-set-name.php)             
+[python2.7 查询mysql中文乱码问题](http://segmentfault.com/a/1190000000353533)               
+[ MySQL5中文乱码解决(Z)](http://greyshine.blog.51cto.com/1003856/301373)             
+[完美解决PHP中文乱码](http://blog.csdn.net/wufongming/article/details/3256186)               
+[PHP乱码问题，UTF-8乱码常见问题小结](http://www.jb51.net/article/30064.htm)                                   
+[怎样解决PHP中文乱码问题](http://www.lupaworld.com/forum.php?mod=viewthread&tid=148807)             
+[PHP输出中文乱码的问题](http://www.cnblogs.com/leandro/archive/2008/04/21/1368517.html)               
+[查看修改mysql编码方式](http://blog.csdn.net/daven_java/article/details/8788071)                      
+[查看修改mysql编码方式[转载]](http://helloworlda.iteye.com/blog/1275160)                               
+[ MySql修改数据库编码为UTF8](http://blog.csdn.net/qiyuexuelang/article/details/9049985)                
+ 
 
 ##参考链接
 [mb_detect_encoding](http://php.net/manual/zh/function.mb-detect-encoding.php)   
