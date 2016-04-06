@@ -50,7 +50,7 @@
 			<br>
 			<input type=\"submit\" value=\"submit\" name=\"submit\">
 		</form>";
-	$con = new mysqli("localhost","fenchico_admin","admin_2016","fenchico_user");		
+	$con = new mysqli("localhost","XXX","XXX","user");		
 	$con->query("SET NAMES 'utf8'");
 	if(isset($_SESSION['admin'])&&$_SESSION['admin']){
 		echo "<h1><center>Wlecome Admin</center></h1><br><br>";

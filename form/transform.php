@@ -1,9 +1,9 @@
 <?php
 /*******EDIT LINES 3-8*******/
 $DB_Server = "localhost"; //MySQL Server    
-$DB_Username = "fenchico_admin"; //MySQL Username     
-$DB_Password = "admin_2016";             //MySQL Password     
-$DB_DBName = "fenchico_user";         //MySQL Database Name  
+$DB_Username = "XXX"; //MySQL Username     
+$DB_Password = "XXX";             //MySQL Password     
+$DB_DBName = "user";         //MySQL Database Name  
 $DB_TBLName = "stu"; //MySQL Table Name   
 $filename = "报名名单";         //File Name
 /*******YOU DO NOT NEED TO EDIT ANYTHING BELOW THIS LINE*******/    

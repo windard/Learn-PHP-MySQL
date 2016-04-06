@@ -143,7 +143,7 @@
 		</div>
 	</form>";
 	if(isset($_POST["stunum"])){
-			$con = new mysqli("localhost","fenchico_admin","admin_2016","fenchico_user");		
+			$con = new mysqli("localhost","XXX","XXX","user");		
 			$con->query("SET NAMES 'utf8'");
 			$name = mysqli_real_escape_string($con,stripslashes($_POST['name']));
 			$sex = mysqli_real_escape_string($con,stripslashes($_POST['sex']));
