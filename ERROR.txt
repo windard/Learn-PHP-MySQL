@@ -1,15 +1,24 @@
-<!-- 	
+<!--
 	/*
 	*
 	*在php中，单引号表示值
 	*就是说用echo 或者print 的单引号括起来的字符串都会被一模一样的打印出来
 	*只有用双引号的值才能够被正确的解析
 	*
-	*/	 
+	*/
 -->
 
 <!--
 
-	*Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238 MicroMessenger/6.3.15 NetType/WIFI Language/en
+	/*Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13E238 MicroMessenger/6.3.15 NetType/WIFI Language/en
 
+-->
+
+<!--
+
+        /*
+        *
+        *神奇，header()之后的代码还会被执行。真是可怕，需要用exit()来确保语句正常结束。
+        *
+        */
 -->
